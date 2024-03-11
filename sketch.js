@@ -48,17 +48,17 @@ function draw() {
 	push()
 		fill(0)
 		if (paintCol == 0) {stroke('aqua'); strokeWeight(3)}
-		rect(-10,gridBounds.tly,gridBounds.tlx+5,gridBounds.side)
+		rect(5,gridBounds.tly,gridBounds.tlx-10,gridBounds.side)
 	pop()
 	push()
 		fill(255)
 		if (paintCol == 255) {stroke('aqua'); strokeWeight(3)}
-		rect(gridBounds.tlx+gridBounds.side+5,gridBounds.tly,(s-gridBounds.tlx-gridBounds.side)+5,gridBounds.side)
+		rect(gridBounds.tlx+gridBounds.side+5,gridBounds.tly,(s-gridBounds.tlx-gridBounds.side)-10,gridBounds.side)
 	pop()
 	push()
 		fill(155)
 		if (paintCol == 155) {stroke('aqua'); strokeWeight(3)}
-		rect(-5,-5,s+10,gridBounds.tly)
+		rect(5,5,s-10,gridBounds.tly-10)
 	pop()
 	
 	if(clickStart.length){
