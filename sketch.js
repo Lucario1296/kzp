@@ -6,7 +6,7 @@ var displayGrid = [] // what is shown on screen
 var displayCols = [] // the colors to show (currently 155 for undef, 255 for white and 0 for black)
 let gridBounds = {tlx: 100, tly: 50, side: 400}
 var hw = 4 // size of the square grid
-var squareSize = gridBounds.side/hw
+var squareSize
 var paintCol = 0
 var dragging = false
 var clickStart = []
@@ -18,6 +18,7 @@ function setup() {
 	let para = getURLParams()
 	let pnum = para.puzzle
 	hw = para.size ? floor(para.size) : 4
+	squareSize = gridBounds.side/hw
 	let randomS = pnum? pnum : floor(Math.random()*99999)
 	randomSeed(randomS)
 	console.log('https://shminge.github.io/kzp/?puzzle='+randomS)
