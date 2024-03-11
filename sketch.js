@@ -19,7 +19,7 @@ function setup() {
 	let pnum = para.puzzle
 	hw = para.size ? floor(para.size) : 4
 	squareSize = gridBounds.side/hw
-	let randomS = pnum? pnum : floor(Math.random()*99999)
+	let randomS = pnum? pnum : floor(Math.random()*9999999)
 	randomSeed(randomS)
 	console.log('https://shminge.github.io/kzp/?puzzle='+randomS)
 	
