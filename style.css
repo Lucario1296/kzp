@@ -1,7 +1,16 @@
 html, body {
   margin: 0;
   padding: 0;
+  background-color: rgb(240, 226, 182); /* Set background color */
+  height: 100%; /* Ensure the body takes up the full height of the viewport */
 }
+
+body {
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
 canvas {
   display: block;
 }
