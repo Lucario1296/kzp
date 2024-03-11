@@ -17,7 +17,7 @@ var showSol = false
 function setup() {
 	let para = getURLParams()
 	let pnum = para.puzzle
-	hw = para.size ? : floor(para.size) : 4
+	hw = para.size ? floor(para.size) : 4
 	let randomS = pnum? pnum : floor(Math.random()*99999)
 	randomSeed(randomS)
 	console.log('https://shminge.github.io/kzp/?puzzle='+randomS)
