@@ -18,7 +18,7 @@ function setup() {
 	let pnum = getURLParams().puzzle
 	let randomS = pnum? pnum : floor(Math.random()*99999)
 	randomSeed(randomS)
-	console.log('https://openprocessing.org/sketch/2203184?puzzle='+randomS)
+	console.log('https://lucario1296.github.io/kzp/?puzzle='+randomS)
 	
 	//noLoop()
 	createCanvas(s,455);
