@@ -1,14 +1,15 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: rgb(240, 226, 182); /* Set background color */
-  height: 100%; /* Ensure the body takes up the full height of the viewport */
+  background-color: rgb(240, 226, 182);
+  height: 100%;
 }
 
 body {
   display: flex;
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 canvas {
