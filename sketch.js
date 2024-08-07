@@ -1,4 +1,4 @@
-
+window.onload = function() {
 
 var s = 600
 var solGrid = [] // Store the answer here
@@ -331,4 +331,5 @@ function update(){
 		showSol = showSol? false : true
 	}
 		
+}
 }
