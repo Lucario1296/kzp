@@ -13,6 +13,11 @@ var clickStart = []
 var neqList = []
 var eqList = []
 var showSol = false
+var buttons = []
+var fakeKey
+var mx = 0
+var my = 0
+var status = 'paint'
 
 function setup() {
 	let para = getURLParams()
@@ -24,7 +29,7 @@ function setup() {
 	console.log('https://shminge.github.io/kzp/?puzzle='+randomS)
 	
 	//noLoop()
-	createCanvas(s,455);
+	createCanvas(s,s-40);
 	generateGrid(); 	
 	textFont('Times New Roman')
 	textAlign(CENTER, CENTER);
@@ -33,6 +38,8 @@ function setup() {
 
 function draw() {
 	background(240,226,182)
+
+
 	
 	
 	
@@ -62,6 +69,46 @@ function draw() {
 		fill(155)
 		if (paintCol == 155) {stroke('aqua'); strokeWeight(3)}
 		rect(5,5,s-10,gridBounds.tly-10)
+	pop()
+	push()
+	if (showSol){stroke('aqua'); strokeWeight(3)}
+	rect(gridBounds.tlx + 5, gridBounds.tly + gridBounds.side + 10, squareSize-10, squareSize-10)
+	b = {tlx: gridBounds.tlx + 5, tly: gridBounds.tly + gridBounds.side + 10, width: squareSize-10, height: squareSize-10, button: 0}
+	buttons[0] = b
+	ellipse(b.tlx + b.width/2, b.tly + b.height/2, b.width - 5, b.height/2)
+	fill('black')
+	ellipse(b.tlx + b.width/2, b.tly + b.height/2, b.width/3, b.height/2)
+	pop()
+	
+	push()
+	rect(gridBounds.tlx + 5 + squareSize, gridBounds.tly + gridBounds.side + 10, squareSize-10, squareSize-10)
+	b = {tlx: gridBounds.tlx + 5 + squareSize, tly: gridBounds.tly + gridBounds.side + 10, width: squareSize-10, height: squareSize-10, button: 1}
+	buttons[1] = b
+	strokeWeight(5)
+	stroke('red')
+	line(b.tlx + 15, b.tly + 15, b.tlx + b.width - 15, b.tly + b.height - 15)
+	line(b.tlx + b.width - 15, b.tly + 15, b.tlx + 15, b.tly + b.height - 15)
+	pop()
+	push()
+	if (status == 'eq'){stroke('aqua'); strokeWeight(3)}
+	rect(gridBounds.tlx + 5 + squareSize*2, gridBounds.tly + gridBounds.side + 10, squareSize-10, squareSize-10)
+	b = {tlx: gridBounds.tlx + 5 + squareSize*2, tly: gridBounds.tly + gridBounds.side + 10, width: squareSize-10, height: squareSize-10, button: 2}
+	buttons[2] = b
+	strokeWeight(5)
+	stroke('green')
+	line(b.tlx + 15, b.tly + 2*b.height / 5, b.tlx + b.width - 15, b.tly + 2*b.height/5)
+	line(b.tlx + 15, b.tly + 3*b.height / 5, b.tlx + b.width - 15, b.tly + 3*b.height/5)
+	pop()
+	push()
+	if (status == 'neq'){stroke('aqua'); strokeWeight(3)}
+	rect(gridBounds.tlx + 5 + squareSize*3, gridBounds.tly + gridBounds.side + 10, squareSize-10, squareSize-10)
+	b = {tlx: gridBounds.tlx + 5 + squareSize*3, tly: gridBounds.tly + gridBounds.side + 10, width: squareSize-10, height: squareSize-10, button: 3}
+	buttons[3] = b
+	strokeWeight(5)
+	stroke('rgb(167,0,0)')
+	line(b.tlx + 15, b.tly + 2*b.height / 5, b.tlx + b.width - 15, b.tly + 2*b.height/5)
+	line(b.tlx + 15, b.tly + 3*b.height / 5, b.tlx + b.width - 15, b.tly + 3*b.height/5)
+	line(b.tlx + b.width/2 + 15, b.tly + 15, b.tlx + b.width/2 - 15, b.tly + b.height - 15)
 	pop()
 	
 	if(clickStart.length){
@@ -128,8 +175,8 @@ function generateGrid(){
 
 
 function mousePressed(){
-	let mx = mouseX
-	let my = mouseY
+	mx = mouseX
+	my = mouseY
 	
 	if (my < gridBounds.tly && my >= 0){
 		paintCol = 155
@@ -148,10 +195,12 @@ function mousePressed(){
 
 			let gX = floor(dispX/squareSize)
 			let gY = floor(dispY/squareSize)
-
-
-			displayCols[gY][gX] = paintCol // paint the cell
+			
+			if (status == 'paint'){
+				displayCols[gY][gX] = paintCol // paint the cell
+			}
 		}
+		
 		if(mx < gridBounds.tlx && mx >= 0){
 			paintCol = 0
 		} else if (mx > gridBounds.tlx + gridBounds.side && mx <= s) {
@@ -159,14 +208,53 @@ function mousePressed(){
 		}
 	}
 	
+		
+	if (status == 'eq') {
+			fakeKey = 'e'
+			update()
+			fakeKey = undefined
+	}
+	
+	if (status == 'neq'){
+			fakeKey = 'q'
+			update()
+			fakeKey = undefined
+	}
+	
+	for (let button of buttons) {
+		if (mx > button.tlx && mx < button.tlx + button.width && my > button.tly && my < button.tly + button.height){
+			if (button.button == 0){
+				showSol = !showSol
+			}
+			if (button.button == 1){
+				eqList = []
+				neqList = []
+				dragging = false
+				clickStart = []
+			}
+			if (button.button == 2) {
+				status = 'eq'
+			}
+			if (button.button == 3){
+				status = 'neq'
+			}
+		}
+	}
+	
 }
 
 
 function keyTyped(){
-	if (dragging) {
-		if (key == 'q'){
-			let mx = mouseX
-			let my = mouseY
+		mx = mouseX
+		my = mouseY
+		fakeKey = key
+		update()
+		fakeKey = undefined
+}
+
+function update(){
+		if (dragging) {
+		if (fakeKey == 'q'){
 			if(mx >= gridBounds.tlx && mx <= gridBounds.tlx + gridBounds.side && my >= gridBounds.tly && my <= gridBounds.tly + gridBounds.side){
 				dragging = true
 				// find displacement
@@ -181,15 +269,15 @@ function keyTyped(){
 					neqList.push([lerp(gX,clickStart[0],0.4),lerp(gY,clickStart[1],0.4),lerp(gX,clickStart[0],0.6),lerp(gY,clickStart[1],0.6)])
 					dragging = false
 					clickStart = []
+					status = 'paint'
 				} else {
 					dragging = false
 					clickStart = []
+					status = 'paint'
 				}
 			}
 			
-		} else if (key == 'e'){
-			let mx = mouseX
-			let my = mouseY
+		} else if (fakeKey == 'e'){
 			if(mx >= gridBounds.tlx && mx <= gridBounds.tlx + gridBounds.side && my >= gridBounds.tly && my <= gridBounds.tly + gridBounds.side){
 				dragging = true
 				// find displacement
@@ -204,9 +292,11 @@ function keyTyped(){
 					eqList.push([lerp(gX,clickStart[0],0.4),lerp(gY,clickStart[1],0.4),lerp(gX,clickStart[0],0.6),lerp(gY,clickStart[1],0.6)])
 					dragging = false
 					clickStart = []
+					status = 'paint'
 				} else {
 					dragging = false
 					clickStart = []
+					status = 'paint'
 				}
 			}
 		}
@@ -214,8 +304,6 @@ function keyTyped(){
 		
 		
 	} else {
-			let mx = mouseX
-			let my = mouseY
 			if(mx >= gridBounds.tlx && mx <= gridBounds.tlx + gridBounds.side && my >= gridBounds.tly && my <= gridBounds.tly + gridBounds.side){
 				dragging = true
 				// find displacement
@@ -228,7 +316,7 @@ function keyTyped(){
 				clickStart = [gX,gY]
 			}
 	}
-	if (key == 'x'){
+	if (fakeKey == 'x'){
 		eqList = []
 		neqList = []
 		dragging = false
@@ -236,7 +324,8 @@ function keyTyped(){
 	}
 	
 	
-	if (key == "p") {
+	if (fakeKey == "p") {
 		showSol = showSol? false : true
 	}
+		
 }
