@@ -1,4 +1,4 @@
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', function() {
 
 var s = 600
 var solGrid = [] // Store the answer here
