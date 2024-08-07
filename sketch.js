@@ -1,5 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-
 var s = 600
 var solGrid = [] // Store the answer here
 var displayGrid = [] // what is shown on screen
@@ -27,12 +25,12 @@ function setup() {
 	squareSize = gridBounds.side/hw
 	randomS = pnum? pnum : floor(Math.random()*9999999)
 	randomSeed(randomS)
-	console.log('https://shminge.github.io/kzp/?puzzle='+randomS)
+	if (!pnum) {
+	window.location.href = 'https://shminge.github.io/kzp/?puzzle='+randomS
+	}
 	
 	//noLoop()
-	let canvas = createCanvas(s,s-40);
-	canvas.parent('sketch-container');
-	document.getElementById('variable-value').innerText = 'Puzzle#'+randomS;
+	createCanvas(s,s-40);
 	generateGrid(); 	
 	textFont('Times New Roman')
 	textAlign(CENTER, CENTER);
