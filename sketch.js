@@ -1,3 +1,5 @@
+
+
 var s = 600
 var solGrid = [] // Store the answer here
 var displayGrid = [] // what is shown on screen
@@ -330,4 +332,3 @@ function update(){
 	}
 		
 }
-})
