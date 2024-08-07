@@ -18,18 +18,21 @@ var fakeKey
 var mx = 0
 var my = 0
 var status = 'paint'
+var randomS
 
 function setup() {
 	let para = getURLParams()
 	let pnum = para.puzzle
 	hw = para.size ? floor(para.size) : 4
 	squareSize = gridBounds.side/hw
-	let randomS = pnum? pnum : floor(Math.random()*9999999)
+	randomS = pnum? pnum : floor(Math.random()*9999999)
 	randomSeed(randomS)
 	console.log('https://shminge.github.io/kzp/?puzzle='+randomS)
 	
 	//noLoop()
-	createCanvas(s,s-40);
+	let canvas = createCanvas(s,s-40);
+	canvas.parent('sketch-container');
+	document.getElementById('variable-value').innerText = 'Puzzle#'+randomS;
 	generateGrid(); 	
 	textFont('Times New Roman')
 	textAlign(CENTER, CENTER);
